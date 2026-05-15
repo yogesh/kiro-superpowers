@@ -122,6 +122,8 @@ The skill itself tells you which.
 Instructions say WHAT, not HOW. "Add X" or "Fix Y" doesn't mean skip workflows.
 
 
+#[[file:using-superpowers/references/kiro-ide-tools.md]]
+
 #[[file:using-superpowers/references/codex-tools.md]]
 
 #[[file:using-superpowers/references/copilot-tools.md]]

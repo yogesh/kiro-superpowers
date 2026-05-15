@@ -149,7 +149,7 @@ Skills reference and depend on each other. The following graph documents all int
 
 This power is derived from the [Superpowers](https://github.com/obra/superpowers) repository by Jesse Vincent, licensed under the MIT License.
 
-See the [LICENSE](./LICENSE) file for the full license text.
+See the LICENSE file in the package root for the full license text.
 
 ## Version
 

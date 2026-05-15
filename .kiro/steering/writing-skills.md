@@ -19,7 +19,7 @@ dependencies:
 
 **Writing skills IS Test-Driven Development applied to process documentation.**
 
-**Personal skills live in agent-specific directories (`~/.claude/skills` for Kiro, `~/.agents/skills/` for Kiro)** 
+**Personal skills live in agent-specific directories (`~/.kiro/skills` for Kiro, `~/.kiro/skills/` for Kiro)** 
 
 You write test cases (pressure scenarios with subagents), watch them fail (baseline behavior), write the skill (documentation), watch tests pass (agents comply), and refactor (close loopholes).
 

@@ -11,14 +11,14 @@ dependencies:
 
 # Requesting Code Review
 
-Dispatch a code reviewer `invoke_sub_agent` sub-agent to catch issues before they cascade. The reviewer gets precisely crafted context for evaluation — never your session's history. This keeps the reviewer focused on the work product, not your thought process, and preserves your own context for continued work.
+Dispatch a code reviewer sub-agent to catch issues before they cascade. The reviewer gets precisely crafted context for evaluation — never your session's history. This keeps the reviewer focused on the work product, not your thought process, and preserves your own context for continued work.
 
 **Core principle:** Review early, review often.
 
 ## When to Request Review
 
 **Mandatory:**
-- After each task in `invoke_sub_agent` sub-agent-driven development
+- After each task in sub-agent-driven development
 - After completing major feature
 - Before merge to main
 
@@ -35,9 +35,9 @@ BASE_SHA=$(git rev-parse HEAD~1)  # or origin/main
 HEAD_SHA=$(git rev-parse HEAD)
 ```
 
-**2. Dispatch code reviewer `invoke_sub_agent` sub-agent:**
+**2. Dispatch code reviewer sub-agent:**
 
-Use Task tool with `general-purpose` type, fill template at `code-reviewer.md`
+Use `invoke_sub_agent` with `general-task-execution`, fill template at `code-reviewer.md`
 
 **Placeholders:**
 - `{DESCRIPTION}` - Brief summary of what you built
@@ -61,13 +61,13 @@ You: Let me request code review before proceeding.
 BASE_SHA=$(git log --oneline | grep "Task 1" | head -1 | awk '{print $1}')
 HEAD_SHA=$(git rev-parse HEAD)
 
-[Dispatch code reviewer `invoke_sub_agent` sub-agent]
+[Dispatch code reviewer sub-agent]
   DESCRIPTION: Added verifyIndex() and repairIndex() with 4 issue types
   PLAN_OR_REQUIREMENTS: Task 2 from docs/superpowers/plans/deployment-plan.md
   BASE_SHA: a7981ec
   HEAD_SHA: 3df7661
 
-[`invoke_sub_agent` sub-agent returns]:
+[Sub-agent returns]:
   Strengths: Clean architecture, real tests
   Issues:
     Important: Missing progress indicators
@@ -80,7 +80,7 @@ You: [Fix progress indicators]
 
 ## Integration with Workflows
 
-**`invoke_sub_agent` sub-agent-Driven Development:**
+**Sub-agent-Driven Development:**
 - Review after EACH task
 - Catch issues before they compound
 - Fix before moving to next task

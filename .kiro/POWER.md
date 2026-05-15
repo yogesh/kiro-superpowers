@@ -6,7 +6,7 @@
 
 **Superpowers** is a structured software development methodology (v5.1.0) by Jesse Vincent that provides a comprehensive set of skills for AI-assisted development. It enforces a disciplined workflow — brainstorm → plan → implement → review — ensuring that design precedes code, plans are actionable, tests drive development, and verification is evidence-based.
 
-This power packages all 14 Superpowers skills as Kiro steering files, preserving the methodology's structured workflow while adapting platform-specific concepts to Kiro's agent model.
+This power packages all 14 Superpowers skills as Kiro steering files, preserving the methodology's structured workflow and adapted natively for Kiro IDE's agent model.
 
 ## Skill Registry
 
@@ -21,8 +21,8 @@ This power packages all 14 Superpowers skills as Kiro steering files, preserving
 | subagent-driven-development | Use when executing implementation plans with independent tasks in the current session | manual | `.kiro/steering/subagent-driven-development.md` |
 | systematic-debugging | Use when encountering any bug, test failure, or unexpected behavior, before proposing fixes | manual | `.kiro/steering/systematic-debugging.md` |
 | test-driven-development | Use when implementing any feature or bugfix, before writing implementation code | manual | `.kiro/steering/test-driven-development.md` |
-| using-git-worktrees | Use when starting feature work that needs isolation from current workspace or before executing implementation plans - ensures an isolated workspace exists via native tools or git worktree fallback | manual | `.kiro/steering/using-git-worktrees.md` |
-| using-superpowers | Use when starting any conversation - establishes how to find and use skills, requiring Skill tool invocation before ANY response including clarifying questions | auto | `.kiro/steering/using-superpowers.md` |
+| using-git-worktrees | Use when starting feature work that needs isolation from current workspace or before executing implementation plans - ensures an isolated workspace exists via git worktree | manual | `.kiro/steering/using-git-worktrees.md` |
+| using-superpowers | Use when starting any conversation - establishes how to find and use steering files, requiring activation before ANY response including clarifying questions | auto | `.kiro/steering/using-superpowers.md` |
 | verification-before-completion | Use when about to claim work is complete, fixed, or passing, before committing or creating PRs - requires running verification commands and confirming output before making any success claims; evidence before assertions always | manual | `.kiro/steering/verification-before-completion.md` |
 | writing-plans | Use when you have a spec or requirements for a multi-step task, before touching code | manual | `.kiro/steering/writing-plans.md` |
 | writing-skills | Use when creating new skills, editing existing skills, or verifying skills work before deployment | manual | `.kiro/steering/writing-skills.md` |

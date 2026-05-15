@@ -19,9 +19,9 @@ dependencies:
 
 Load plan, review critically, execute all tasks, report when complete.
 
-**Announce at start:** "I'm using the executing-plans skill to implement this plan."
+**Announce at start:** "I'm using the executing-plans steering file to implement this plan."
 
-**Note:** Tell the user that Superpowers works much better with access to subagents. The quality of its work will be significantly higher if run on a platform with `invoke_sub_agent` sub-agent support (such as Kiro or Kiro). If subagents are available, use superpowers:`invoke_sub_agent` sub-agent-driven-development instead of this skill.
+**Note:** Superpowers works much better with access to subagents. The quality of its work will be significantly higher if run with `invoke_sub_agent` support. If subagents are available, use superpowers:subagent-driven-development instead of this steering file.
 
 ## The Process
 
@@ -29,7 +29,7 @@ Load plan, review critically, execute all tasks, report when complete.
 1. Read plan file
 2. Review critically - identify any questions or concerns about the plan
 3. If concerns: Raise them with the user before starting
-4. If no concerns: Create track progress in conversation, confirm each step [Adaptation note: replaces TodoWrite — Kiro uses conversation-based task tracking instead of a dedicated todo tool] and proceed
+4. If no concerns: Track progress in conversation and proceed
 
 ### Step 2: Execute Tasks
 
@@ -42,9 +42,9 @@ For each task:
 ### Step 3: Complete Development
 
 After all tasks complete and verified:
-- Announce: "I'm using the finishing-a-development-branch skill to complete this work."
-- **REQUIRED SUB-SKILL:** Use superpowers:finishing-a-development-branch
-- Follow that skill to verify tests, present options, execute choice
+- Announce: "I'm using the finishing-a-development-branch steering file to complete this work."
+- **REQUIRED:** Activate superpowers:finishing-a-development-branch
+- Follow that steering file to verify tests, present options, execute choice
 
 ## When to Stop and Ask for Help
 
@@ -59,7 +59,7 @@ After all tasks complete and verified:
 ## When to Revisit Earlier Steps
 
 **Return to Review (Step 1) when:**
-- Partner updates the plan based on your feedback
+- User updates the plan based on your feedback
 - Fundamental approach needs rethinking
 
 **Don't force through blockers** - stop and ask.
@@ -68,13 +68,13 @@ After all tasks complete and verified:
 - Review plan critically first
 - Follow plan steps exactly
 - Don't skip verifications
-- Reference skills when plan says to
+- Reference steering files when plan says to
 - Stop when blocked, don't guess
 - Never start implementation on main/master branch without explicit user consent
 
 ## Integration
 
-**Required workflow skills:**
+**Required workflow steering files:**
 - **superpowers:using-git-worktrees** - Ensures isolated workspace (creates one or verifies existing)
-- **superpowers:writing-plans** - Creates the plan this skill executes
+- **superpowers:writing-plans** - Creates the plan this steering file executes
 - **superpowers:finishing-a-development-branch** - Complete development after all tasks

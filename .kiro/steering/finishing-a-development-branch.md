@@ -12,7 +12,7 @@ Guide completion of development work by presenting clear options and handling ch
 
 **Core principle:** Verify tests → Detect environment → Present options → Execute choice → Clean up.
 
-**Announce at start:** "I'm using the finishing-a-development-branch skill to complete this work."
+**Announce at start:** "I'm using the finishing-a-development-branch steering file to complete this work."
 
 ## The Process
 
@@ -186,11 +186,11 @@ WORKTREE_PATH=$(git rev-parse --show-toplevel)
 ```bash
 MAIN_ROOT=$(git -C "$(git rev-parse --git-common-dir)/.." rev-parse --show-toplevel)
 cd "$MAIN_ROOT"
-git worktree (via `execute_bash`) remove "$WORKTREE_PATH"
-git worktree (via `execute_bash`) prune  # Self-healing: clean up any stale registrations
+git worktree remove "$WORKTREE_PATH"
+git worktree prune  # Self-healing: clean up any stale registrations
 ```
 
-**Otherwise:** The host environment (harness) owns this workspace. Do NOT remove it. If your platform provides a workspace-exit tool, use it. Otherwise, leave the workspace in place.
+**Otherwise:** The host environment owns this workspace. Do NOT remove it. Leave the workspace in place.
 
 ## Quick Reference
 
@@ -219,9 +219,9 @@ git worktree (via `execute_bash`) prune  # Self-healing: clean up any stale regi
 - **Problem:** `git branch -d` fails because worktree still references the branch
 - **Fix:** Merge first, remove worktree, then delete branch
 
-**Running git worktree (via `execute_bash`) remove from inside the worktree**
+**Running git worktree remove from inside the worktree**
 - **Problem:** Command fails silently when CWD is inside the worktree being removed
-- **Fix:** Always `cd` to main repo root before `git worktree (via `execute_bash`) remove`
+- **Fix:** Always `cd` to main repo root before `git worktree remove`
 
 **Cleaning up harness-owned worktrees**
 - **Problem:** Removing a worktree the harness created causes phantom state
@@ -240,7 +240,7 @@ git worktree (via `execute_bash`) prune  # Self-healing: clean up any stale regi
 - Force-push without explicit request
 - Remove a worktree before confirming merge success
 - Clean up worktrees you didn't create (provenance check)
-- Run `git worktree (via `execute_bash`) remove` from inside the worktree
+- Run `git worktree remove` from inside the worktree
 
 **Always:**
 - Verify tests before offering options
@@ -249,4 +249,4 @@ git worktree (via `execute_bash`) prune  # Self-healing: clean up any stale regi
 - Get typed confirmation for Option 4
 - Clean up worktree for Options 1 & 4 only
 - `cd` to main repo root before worktree removal
-- Run `git worktree (via `execute_bash`) prune` after removal
+- Run `git worktree prune` after removal

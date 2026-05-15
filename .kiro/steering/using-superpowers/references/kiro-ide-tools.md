@@ -1,27 +1,24 @@
-# Kiro Kiro IDE Tool Mapping
+# Kiro IDE Tool Reference
 
-Skills use Claude Code tool names. Here are the Kiro IDE equivalents:
+This is the native platform. Steering files use Kiro IDE tool names directly.
 
-| Skill references | Kiro IDE equivalent |
-|-----------------|--------------------------|
-| `Skill tool / invoke skill` | #context-key manual steering reference |
-| `TodoWrite / todo items` | Kiro task tracking via conversation |
-| `EnterPlanMode` | Steering file workflow guidance |
-| `Subagent dispatch` | invoke_sub_agent tool |
-| `Claude Code / Codex / Gemini / Cursor` | "Kiro" or "the agent" |
-| `Read tool` | read_file / read_files / readCode tools |
-| `Write / Edit tool` | fs_write / str_replace tools |
-| `Bash tool` | execute_bash tool |
-| `WebSearch / WebFetch` | remote_web_search / web_fetch tools |
-| `Hooks / session start` | Kiro hooks (fileEdited, promptSubmit, etc.) |
-| `Git worktrees (platform commands)` | Standard git worktree via execute_bash |
-| `"your human partner"` | "the user" |
-| `Plugin marketplace` | Kiro Powers |
-| `getDiagnostics tool` | getDiagnostics tool |
-| `user_input tool` | user_input tool |
-| `createHook tool` | createHook tool |
+| Concept | Kiro IDE Tool |
+|---------|---------------|
+| Activate steering file | `discloseContext` tool or `#context-key` in chat |
+| Task tracking | Track progress in conversation |
+| Sub-agent dispatch | `invoke_sub_agent` tool |
+| Read files | `read_file` / `read_files` / `readCode` tools |
+| Write/Edit files | `fs_write` / `str_replace` tools |
+| Run commands | `execute_bash` tool |
+| Web search | `remote_web_search` / `web_fetch` tools |
+| Hooks | Kiro hooks (fileEdited, promptSubmit, preToolUse, etc.) |
+| Git worktrees | `git worktree` via `execute_bash` |
+| Diagnostics | `getDiagnostics` tool |
+| User input | `user_input` tool |
+| Create hooks | `createHook` tool |
+| Powers/Plugins | Kiro Powers via `kiroPowers` tool |
 
-## Subagent Support
+## Sub-agent Support
 
 Sub-agent dispatch is supported via the `invoke_sub_agent` tool. Use it to delegate tasks to specialized sub-agents for parallel or focused execution.
 

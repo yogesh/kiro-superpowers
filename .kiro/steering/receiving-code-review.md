@@ -28,7 +28,7 @@ WHEN receiving code review feedback:
 ## Forbidden Responses
 
 **NEVER:**
-- "You're absolutely right!" (explicit workspace steering files violation)
+- "You're absolutely right!" (performative)
 - "Great point!" / "Excellent feedback!" (performative)
 - "Let me implement that now" (before verification)
 
@@ -50,7 +50,7 @@ WHY: Items may be related. Partial understanding = wrong implementation.
 
 **Example:**
 ```
-the user: "Fix 1-6"
+User: "Fix 1-6"
 You understand 1,2,3,6. Unclear on 4,5.
 
 ❌ WRONG: Implement 1,2,3,6 now, ask about 4,5 later
@@ -59,7 +59,7 @@ You understand 1,2,3,6. Unclear on 4,5.
 
 ## Source-Specific Handling
 
-### From the user
+### From the User
 - **Trusted** - implement after understanding
 - **Still ask** if scope unclear
 - **No performative agreement**
@@ -84,7 +84,7 @@ IF conflicts with the user's prior decisions:
   Stop and discuss with the user first
 ```
 
-**the user's rule:** "External feedback - be skeptical, but check carefully"
+**Rule:** "External feedback - be skeptical, but check carefully"
 
 ## YAGNI Check for "Professional" Features
 
@@ -96,7 +96,7 @@ IF reviewer suggests "implementing properly":
   IF used: Then implement properly
 ```
 
-**the user's rule:** "You and reviewer both report to me. If we don't need this feature, don't add it."
+**Rule:** "If we don't need this feature, don't add it."
 
 ## Implementation Order
 
@@ -127,8 +127,6 @@ Push back when:
 - Reference working tests/code
 - Involve the user if architectural
 
-**Signal if uncomfortable pushing back out loud:** "Strange things are afoot at the Circle K"
-
 ## Acknowledging Correct Feedback
 
 When feedback IS correct:
@@ -140,7 +138,6 @@ When feedback IS correct:
 ❌ "You're absolutely right!"
 ❌ "Great point!"
 ❌ "Thanks for catching that!"
-❌ "Thanks for [anything]"
 ❌ ANY gratitude expression
 ```
 
@@ -196,7 +193,7 @@ Reviewer: "Implement proper metrics tracking with database, date filters, CSV ex
 
 **Unclear Item (Good):**
 ```
-the user: "Fix items 1-6"
+User: "Fix items 1-6"
 You understand 1,2,3,6. Unclear on 4,5.
 ✅ "Understand 1,2,3,6. Need clarification on 4 and 5 before implementing."
 ```

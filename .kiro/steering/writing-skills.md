@@ -19,19 +19,19 @@ dependencies:
 
 **Writing skills IS Test-Driven Development applied to process documentation.**
 
-**Personal skills live in agent-specific directories (`~/.kiro/skills` for Kiro, `~/.kiro/skills/` for Kiro)** 
+**Steering files live in `.kiro/steering/` within the workspace.**
 
-You write test cases (pressure scenarios with subagents), watch them fail (baseline behavior), write the skill (documentation), watch tests pass (agents comply), and refactor (close loopholes).
+You write test cases (pressure scenarios with sub-agents), watch them fail (baseline behavior), write the steering file (documentation), watch tests pass (agents comply), and refactor (close loopholes).
 
-**Core principle:** If you didn't watch an agent fail without the skill, you don't know if the skill teaches the right thing.
+**Core principle:** If you didn't watch an agent fail without the steering file, you don't know if the steering file teaches the right thing.
 
-**REQUIRED BACKGROUND:** You MUST understand superpowers:test-driven-development before using this skill. That skill defines the fundamental RED-GREEN-REFACTOR cycle. This skill adapts TDD to documentation.
+**REQUIRED BACKGROUND:** You MUST understand superpowers:test-driven-development before using this steering file. That skill defines the fundamental RED-GREEN-REFACTOR cycle. This steering file adapts TDD to documentation.
 
-**Official guidance:** For Anthropic's official skill authoring best practices, see anthropic-best-practices.md. This document provides additional patterns and guidelines that complement the TDD-focused approach in this skill.
+**Official guidance:** For Anthropic's official skill authoring best practices, see anthropic-best-practices.md. This document provides additional patterns and guidelines that complement the TDD-focused approach in this steering file.
 
 ## What is a Skill?
 
-A **skill** is a reference guide for proven techniques, patterns, or tools. Skills help future Claude instances find and apply effective approaches.
+A **skill** is a reference guide for proven techniques, patterns, or tools. Skills (implemented as steering files in Kiro) help future agent instances find and apply effective approaches.
 
 **Skills are:** Reusable techniques, patterns, tools, reference guides
 
@@ -42,17 +42,17 @@ A **skill** is a reference guide for proven techniques, patterns, or tools. Skil
 | TDD Concept | Skill Creation |
 |-------------|----------------|
 | **Test case** | Pressure scenario with `invoke_sub_agent` sub-agent |
-| **Production code** | Skill document (SKILL.md) |
-| **Test fails (RED)** | Agent violates rule without skill (baseline) |
-| **Test passes (GREEN)** | Agent complies with skill present |
+| **Production code** | Steering file document |
+| **Test fails (RED)** | Agent violates rule without steering file (baseline) |
+| **Test passes (GREEN)** | Agent complies with steering file present |
 | **Refactor** | Close loopholes while maintaining compliance |
-| **Write test first** | Run baseline scenario BEFORE writing skill |
+| **Write test first** | Run baseline scenario BEFORE writing steering file |
 | **Watch it fail** | Document exact rationalizations agent uses |
-| **Minimal code** | Write skill addressing those specific violations |
+| **Minimal code** | Write steering file addressing those specific violations |
 | **Watch it pass** | Verify agent now complies |
 | **Refactor cycle** | Find new rationalizations → plug → re-verify |
 
-The entire skill creation process follows RED-GREEN-REFACTOR.
+The entire steering file creation process follows RED-GREEN-REFACTOR.
 
 ## When to Create a Skill
 
@@ -83,13 +83,13 @@ API docs, syntax guides, tool documentation (office docs)
 
 
 ```
-skills/
-  skill-name/
-    SKILL.md              # Main reference (required)
-    supporting-file.*     # Only if needed
+.kiro/steering/
+  skill-name.md              # Main steering file (required)
+  skill-name/                # Supporting directory (if needed)
+    supporting-file.*        # Only if needed
 ```
 
-**Flat namespace** - all skills in one searchable namespace
+**Flat namespace** - all steering files in one searchable directory
 
 **Separate files for:**
 1. **Heavy reference** (100+ lines) - API docs, comprehensive syntax
@@ -100,25 +100,24 @@ skills/
 - Code patterns (< 50 lines)
 - Everything else
 
-## SKILL.md Structure
+## Steering File Structure
 
 **Frontmatter (YAML):**
-- Two required fields: `name` and `description` (see [agentskills.io/specification](https://agentskills.io/specification) for all supported fields)
-- Max 1024 characters total
-- `name`: Use letters, numbers, and hyphens only (no parentheses, special chars)
-- `description`: Third-person, describes ONLY when to use (NOT what it does)
+- Required fields: `description` and `inclusion`
+- `description`: Describes ONLY when to use (NOT what it does)
   - Start with "Use when..." to focus on triggering conditions
   - Include specific symptoms, situations, and contexts
-  - **NEVER summarize the skill's process or workflow** (see CSO section for why)
-  - Keep under 500 characters if possible
+  - **NEVER summarize the steering file's process or workflow** (see CSO section for why)
+- `inclusion`: One of `auto`, `manual`, or `fileMatch`
+- Optional: `name`, `dependencies`, `fileMatchPattern`
 
 ```markdown
 ---
-name: Skill-Name-With-Hyphens
-description: Use when [specific triggering conditions and symptoms]
+description: "Use when [specific triggering conditions and symptoms]"
+inclusion: manual
 ---
 
-# Skill Name
+# Steering File Name
 
 ## Overview
 What is this? Core principle in 1-2 sentences.
@@ -147,29 +146,29 @@ Concrete results
 ```
 
 
-## Claude Search Optimization (CSO)
+## Discovery Optimization
 
-**Critical for discovery:** Future Claude needs to FIND your skill
+**Critical for discovery:** The agent needs to FIND your steering file
 
 ### 1. Rich Description Field
 
-**Purpose:** Claude reads description to decide which skills to load for a given task. Make it answer: "Should I read this skill right now?"
+**Purpose:** The agent reads description to decide which steering files to load for a given task. Make it answer: "Should I read this steering file right now?"
 
 **Format:** Start with "Use when..." to focus on triggering conditions
 
-**CRITICAL: Description = When to Use, NOT What the Skill Does**
+**CRITICAL: Description = When to Use, NOT What the Steering File Does**
 
-The description should ONLY describe triggering conditions. Do NOT summarize the skill's process or workflow in the description.
+The description should ONLY describe triggering conditions. Do NOT summarize the steering file's process or workflow in the description.
 
-**Why this matters:** Testing revealed that when a description summarizes the skill's workflow, Claude may follow the description instead of reading the full skill content. A description saying "code review between tasks" caused Claude to do ONE review, even though the skill's flowchart clearly showed TWO reviews (spec compliance then code quality).
+**Why this matters:** Testing revealed that when a description summarizes the workflow, the agent may follow the description instead of reading the full content. A description saying "code review between tasks" caused the agent to do ONE review, even though the flowchart clearly showed TWO reviews (spec compliance then code quality).
 
-When the description was changed to just "Use when executing implementation plans with independent tasks" (no workflow summary), Claude correctly read the flowchart and followed the two-stage review process.
+When the description was changed to just "Use when executing implementation plans with independent tasks" (no workflow summary), the agent correctly read the flowchart and followed the two-stage review process.
 
-**The trap:** Descriptions that summarize workflow create a shortcut Claude will take. The skill body becomes documentation Claude skips.
+**The trap:** Descriptions that summarize workflow create a shortcut the agent will take. The steering file body becomes documentation the agent skips.
 
 ```yaml
-# ❌ BAD: Summarizes workflow - Claude may follow this instead of reading skill
-description: Use when executing plans - dispatches `invoke_sub_agent` sub-agent per task with code review between tasks
+# ❌ BAD: Summarizes workflow - agent may follow this instead of reading steering file
+description: Use when executing plans - dispatches sub-agent per task with code review between tasks
 
 # ❌ BAD: Too much process detail
 description: Use for TDD - write test first, watch it fail, write minimal code, refactor
@@ -182,33 +181,29 @@ description: Use when implementing any feature or bugfix, before writing impleme
 ```
 
 **Content:**
-- Use concrete triggers, symptoms, and situations that signal this skill applies
+- Use concrete triggers, symptoms, and situations that signal this steering file applies
 - Describe the *problem* (race conditions, inconsistent behavior) not *language-specific symptoms* (setTimeout, sleep)
-- Keep triggers technology-agnostic unless the skill itself is technology-specific
-- If skill is technology-specific, make that explicit in the trigger
-- Write in third person (injected into system prompt)
-- **NEVER summarize the skill's process or workflow**
+- Keep triggers technology-agnostic unless the steering file itself is technology-specific
+- If steering file is technology-specific, make that explicit in the trigger
+- **NEVER summarize the steering file's process or workflow**
 
 ```yaml
 # ❌ BAD: Too abstract, vague, doesn't include when to use
 description: For async testing
 
-# ❌ BAD: First person
-description: I can help you with async tests when they're flaky
-
-# ❌ BAD: Mentions technology but skill isn't specific to it
+# ❌ BAD: Mentions technology but steering file isn't specific to it
 description: Use when tests use setTimeout/sleep and are flaky
 
 # ✅ GOOD: Starts with "Use when", describes problem, no workflow
 description: Use when tests have race conditions, timing dependencies, or pass/fail inconsistently
 
-# ✅ GOOD: Technology-specific skill with explicit trigger
+# ✅ GOOD: Technology-specific steering file with explicit trigger
 description: Use when using React Router and handling authentication redirects
 ```
 
 ### 2. Keyword Coverage
 
-Use words Claude would search for:
+Use words the agent would search for:
 - Error messages: "Hook timed out", "ENOTEMPTY", "race condition"
 - Symptoms: "flaky", "hanging", "zombie", "pollution"
 - Synonyms: "timeout/hang/freeze", "cleanup/teardown/afterEach"
@@ -222,18 +217,18 @@ Use words Claude would search for:
 
 ### 4. Token Efficiency (Critical)
 
-**Problem:** getting-started and frequently-referenced skills load into EVERY conversation. Every token counts.
+**Problem:** Auto-included and frequently-referenced steering files load into EVERY conversation. Every token counts.
 
 **Target word counts:**
-- getting-started workflows: <150 words each
-- Frequently-loaded skills: <200 words total
-- Other skills: <500 words (still be concise)
+- Auto-included steering files: <150 words each
+- Frequently-loaded steering files: <200 words total
+- Other steering files: <500 words (still be concise)
 
 **Techniques:**
 
 **Move details to tool help:**
 ```bash
-# ❌ BAD: Document all flags in SKILL.md
+# ❌ BAD: Document all flags in steering file
 search-conversations supports --text, --both, --after DATE, --before DATE, --limit N
 
 # ✅ GOOD: Reference --help
@@ -243,35 +238,35 @@ search-conversations supports multiple modes and filters. Run --help for details
 **Use cross-references:**
 ```markdown
 # ❌ BAD: Repeat workflow details
-When searching, use `invoke_sub_agent` with template...
+When searching, use invoke_sub_agent with template...
 [20 lines of repeated instructions]
 
-# ✅ GOOD: Reference other skill
-Always use subagents (50-100x context savings). REQUIRED: Use [other-skill-name] for workflow.
+# ✅ GOOD: Reference other steering file
+Always use subagents (50-100x context savings). REQUIRED: Use [other-steering-file] for workflow.
 ```
 
 **Compress examples:**
 ```markdown
 # ❌ BAD: Verbose example (42 words)
-the user: "How did we handle authentication errors in React Router before?"
+User: "How did we handle authentication errors in React Router before?"
 You: I'll search past conversations for React Router authentication patterns.
-[use `invoke_sub_agent` with search query: "React Router authentication error handling 401"]
+[use invoke_sub_agent with search query: "React Router authentication error handling 401"]
 
 # ✅ GOOD: Minimal example (20 words)
-Partner: "How did we handle auth errors in React Router?"
+User: "How did we handle auth errors in React Router?"
 You: Searching...
-[use `invoke_sub_agent` → synthesis]
+[use invoke_sub_agent → synthesis]
 ```
 
 **Eliminate redundancy:**
-- Don't repeat what's in cross-referenced skills
+- Don't repeat what's in cross-referenced steering files
 - Don't explain what's obvious from command
 - Don't include multiple examples of same pattern
 
 **Verification:**
 ```bash
-wc -w skills/path/SKILL.md
-# getting-started workflows: aim for <150 each
+wc -w .kiro/steering/path/file.md
+# Auto-included steering files: aim for <150 each
 # Other frequently-loaded: aim for <200 total
 ```
 
@@ -285,17 +280,14 @@ wc -w skills/path/SKILL.md
 - `creating-skills`, `testing-skills`, `debugging-with-logs`
 - Active, describes the action you're taking
 
-### 4. Cross-Referencing Other Skills
+### 4. Cross-Referencing Other Steering Files
 
-**When writing documentation that references other skills:**
+**When writing documentation that references other steering files:**
 
-Use skill name only, with explicit requirement markers:
-- ✅ Good: `**REQUIRED SUB-SKILL:** Use superpowers:test-driven-development`
+Use steering file name only, with explicit requirement markers:
+- ✅ Good: `**REQUIRED:** Activate superpowers:test-driven-development`
 - ✅ Good: `**REQUIRED BACKGROUND:** You MUST understand superpowers:systematic-debugging`
-- ❌ Bad: `See skills/testing/test-driven-development` (unclear if required)
-- ❌ Bad: `@skills/testing/test-driven-development/SKILL.md` (force-loads, burns context)
-
-**Why no @ links:** `@` syntax force-loads files immediately, consuming 200k+ context before you need them.
+- ❌ Bad: `See .kiro/steering/test-driven-development.md` (unclear if required)
 
 ## Flowchart Usage
 
@@ -384,13 +376,13 @@ When: Reference material too large for inline
 ## The Iron Law (Same as TDD)
 
 ```
-NO SKILL WITHOUT A FAILING TEST FIRST
+NO STEERING FILE WITHOUT A FAILING TEST FIRST
 ```
 
-This applies to NEW skills AND EDITS to existing skills.
+This applies to NEW steering files AND EDITS to existing steering files.
 
-Write skill before testing? Delete it. Start over.
-Edit skill without testing? Same violation.
+Write steering file before testing? Delete it. Start over.
+Edit steering file without testing? Same violation.
 
 **No exceptions:**
 - Not for "simple additions"
@@ -400,7 +392,7 @@ Edit skill without testing? Same violation.
 - Don't "adapt" while running tests
 - Delete means delete
 
-**REQUIRED BACKGROUND:** The superpowers:test-driven-development skill explains why this matters. Same principles apply to documentation.
+**REQUIRED BACKGROUND:** The superpowers:test-driven-development steering file explains why this matters. Same principles apply to documentation.
 
 ## Testing All Skill Types
 
@@ -457,12 +449,12 @@ Different skill types need different test approaches:
 |--------|---------|
 | "Skill is obviously clear" | Clear to you ≠ clear to other agents. Test it. |
 | "It's just a reference" | References can have gaps, unclear sections. Test retrieval. |
-| "Testing is overkill" | Untested skills have issues. Always. 15 min testing saves hours. |
-| "I'll test if problems emerge" | Problems = agents can't use skill. Test BEFORE deploying. |
-| "Too tedious to test" | Testing is less tedious than debugging bad skill in production. |
+| "Testing is overkill" | Untested steering files have issues. Always. 15 min testing saves hours. |
+| "I'll test if problems emerge" | Problems = agents can't use steering file. Test BEFORE deploying. |
+| "Too tedious to test" | Testing is less tedious than debugging bad steering file in production. |
 | "I'm confident it's good" | Overconfidence guarantees issues. Test anyway. |
 | "Academic review is enough" | Reading ≠ using. Test application scenarios. |
-| "No time to test" | Deploying untested skill wastes more time fixing it later. |
+| "No time to test" | Deploying untested steering file wastes more time fixing it later. |
 
 **All of these mean: Test before deploying. No exceptions.**
 
@@ -475,8 +467,6 @@ Different skill types need different test approaches:
 #[[file:writing-skills/render-graphs.js]]
 
 #[[file:writing-skills/anthropic-best-practices.md]]
-
-#[[file:writing-skills/examples/CLAUDE_MD_TESTING.md]]
 
 #[[file:writing-skills/graphviz-conventions.dot]]
 

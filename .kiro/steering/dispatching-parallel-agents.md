@@ -67,11 +67,10 @@ Each agent gets:
 ### 3. Dispatch in Parallel
 
 ```typescript
-// In Kiro / AI environment
-Task("Fix agent-tool-abort.test.ts failures")
-Task("Fix batch-completion-behavior.test.ts failures")
-Task("Fix tool-approval-race-conditions.test.ts failures")
-// All three run concurrently
+// Using invoke_sub_agent — all three run concurrently
+invoke_sub_agent("Fix agent-tool-abort.test.ts failures")
+invoke_sub_agent("Fix batch-completion-behavior.test.ts failures")
+invoke_sub_agent("Fix tool-approval-race-conditions.test.ts failures")
 ```
 
 ### 4. Review and Integrate

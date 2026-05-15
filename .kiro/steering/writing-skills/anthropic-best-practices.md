@@ -1,10 +1,8 @@
 # Skill authoring best practices
 
-> Learn how to write effective Skills that Claude can discover and use successfully.
+> External reference: Anthropic's official guide on writing effective agent skills. The principles here apply to writing Kiro steering files — substitute "steering file" for "Skill" and "the agent" for "Claude" when applying these patterns.
 
-Good Skills are concise, well-structured, and tested with real usage. This guide provides practical authoring decisions to help you write Skills that Claude can discover and use effectively.
-
-For conceptual background on how Skills work, see the [Skills overview](/en/docs/agents-and-tools/agent-skills/overview).
+Good steering files are concise, well-structured, and tested with real usage. This guide provides practical authoring decisions to help you write steering files that the agent can discover and use effectively.
 
 ## Core principles
 

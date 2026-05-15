@@ -104,7 +104,7 @@ Ported from the [Superpowers methodology](https://github.com/obra/superpowers) v
 
 - Source commit: `f2cbfbefebbfef77321e4c9abc9e949826bea9d7`
 - Original conversion: 2026-05-15
-- Kiro-native overhaul: 2025-07-15
+- Kiro-native overhaul: 2026-05-15
 
 ## License
 
